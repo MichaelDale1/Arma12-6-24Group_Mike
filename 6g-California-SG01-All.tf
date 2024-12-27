@@ -1,7 +1,8 @@
-resource "aws_security_group" "app1-sg01-servers-TG01-SG01-80" {
-  name        = "app1-sg01-servers-TG01-SG01-80"
-  description = "app1-sg01-servers-TG01-SG01-80"
-  vpc_id      = aws_vpc.app1-vpc-A-Tokyo.id
+resource "aws_security_group" "app1-sg01-servers-TG01-SG01-80-California" {
+  provider = aws.California
+  name        = "app1-sg01-servers-TG01-SG01-80-California"
+  description = "app1-sg01-servers-TG01-SG01-80-California"
+  vpc_id      = aws_vpc.app1-vpc-G-California.id
 
   ingress {
     description = "MyHomePage"
@@ -21,7 +22,7 @@ resource "aws_security_group" "app1-sg01-servers-TG01-SG01-80" {
   }
 
   tags = {
-    Name    = "app1-sg01-servers-TG01-SG01-80"
+    Name    = "app1-sg01-servers-TG01-SG01-80-California"
     Service = "application1"
     Owner   = "Maximus"
     Planet  = "Mighty"
@@ -33,10 +34,11 @@ resource "aws_security_group" "app1-sg01-servers-TG01-SG01-80" {
 
 
 
-resource "aws_security_group" "app1-sg02-LB01" {
-  name        = "app1-sg02-LB01"
-  description = "app1-sg02-LB01"
-  vpc_id      = aws_vpc.app1-vpc-A-Tokyo.id
+resource "aws_security_group" "app1-sg02-LB01-California" {
+  provider = aws.California
+  name        = "app1-sg02-LB01-California"
+  description = "app1-sg02-LB01-California"
+  vpc_id      = aws_vpc.app1-vpc-G-California.id
 
   ingress {
     description = "MyHomePage"
@@ -70,11 +72,13 @@ ingress {
 
 }
 
-
-resource "aws_security_group" "app1-sg03-secure-servers-TG02-443" {
-  name        = "app1-sg03-secure-servers-TG02-443"
-  description = "app1-sg03-secure-servers-TG02-443"
-  vpc_id      = aws_vpc.app1-vpc-A-Tokyo.id
+#We don't currently need port 443 
+/*
+resource "aws_security_group" "app1-sg03-securG-servers-TG02-443-California" {
+  provider = aws.California
+  name        = "app1-sg03-securG-servers-TG02-443-California"
+  description = "app1-sg03-securG-servers-TG02-443-California"
+  vpc_id      = aws_vpc.app1-vpc-G-California.id
 
   ingress {
     description = "MyHomePage"
@@ -101,10 +105,11 @@ ingress {
   }
 
   tags = {
-    Name    = "app1-sg03-secure-servers-TG02-443"
+    Name    = "app1-sg03-securG-servers-TG02-443-California"
     Service = "application1"
     Owner   = "Maximus"
     Planet  = "Mighty"
   }
 
 }
+*/

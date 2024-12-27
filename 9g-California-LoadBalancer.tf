@@ -1,12 +1,14 @@
-resource "aws_lb" "app1_alb" {
+#Lots of death and suffering here, make sure it's false
+resource "aws_lb" "app1_alb-California" {
+  provider = aws.California
   name               = "app1-load-balancer"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.app1-sg02-LB01.id]
+  security_groups    = [aws_security_group.app1-sg02-LB01-California.id]
   subnets            = [
-    aws_subnet.public-ap-northeast-1a.id,
-    aws_subnet.public-ap-northeast-1d.id,
-    aws_subnet.public-ap-northeast-1c.id
+    /*aws_subnet.public-us-west-1a.id,*/
+    aws_subnet.public-us-west-1b.id,
+    aws_subnet.public-us-west-1c.id
   ]
   enable_deletion_protection = false
 #Lots of death and suffering here, make sure it's false
@@ -14,31 +16,33 @@ resource "aws_lb" "app1_alb" {
   tags = {
     Name    = "App1LoadBalancer"
     Service = "Multiapp"
-    Owner   = "Chewbacca"
+    Owner   = "Mighty"
     Project = "Multiapp"
   }
 }
 
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.app1_alb.arn
+resource "aws_lb_listener" "http-California" {
+  provider = aws.California
+  load_balancer_arn = aws_lb.app1_alb-California.arn
   port              = 80
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.app1_tg_80.arn
+    target_group_arn = aws_lb_target_group.app1_tg_80-California.arn
   }
 }
 
-data "aws_acm_certificate" "cert" {
+data "aws_acm_certificate" "cert-California" {
   domain   = "madibamaximus.click"
   statuses = ["ISSUED"]
   most_recent = true
 }
 
 /*
-resource "aws_lb_listener" "https" {
-  load_balancer_arn = aws_lb.app1_alb.arn
+resource "aws_lb_listener" "https-California" {
+  provider = aws.California
+  load_balancer_arn = aws_lb.app1_alb-California.arn
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"  # or whichever policy suits your requirements
@@ -52,7 +56,7 @@ resource "aws_lb_listener" "https" {
   }
 }
 */
-output "lb_dns_name" {
-  value       = aws_lb.app1_alb.dns_name
+output "lb_dns_name-California" {
+  value       = aws_lb.app1_alb-California.dns_name
   description = "The DNS name of the App1 Load Balancer."
 }

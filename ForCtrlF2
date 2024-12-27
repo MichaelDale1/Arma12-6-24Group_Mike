@@ -1,0 +1,10 @@
+# Australia uses Sydney
+Sydney_cidr_blocks =[
+    {cidr_block ="10.216.0.0/16", name = "app1-vpc-E-Sydney", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "3"},
+    {cidr_block ="10.216.1.0/24", name = "public-ap-southeast-2a", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2a"},
+    {cidr_block ="10.216.2.0/24", name = "public-ap-southeast-2b", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2b"},
+    {cidr_block ="10.216.3.0/24", name = "public-ap-southeast-2c", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2c"},
+    {cidr_block ="10.216.11.0/24", name = "private-ap-southeast-2a", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2a"},
+    {cidr_block ="10.216.12.0/24", name = "private-ap-southeast-2b", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2b"},
+    {cidr_block ="10.216.13.0/24", name = "private-ap-southeast-2c", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2c"}
+]

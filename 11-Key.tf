@@ -1,6 +1,6 @@
+ #Tokyo is the default region/ Tokyo Key Pair
 resource "tls_private_key" "MyLinuxBox" {
-  #Tokyo is the default region
-  /*provider =  aws.tokyo*/
+   /*provider =  aws.tokyo*/
   algorithm = "RSA"
   rsa_bits  = 2048
 }
@@ -17,3 +17,4 @@ output "private_key" {
 output "public_key" {
   value = data.tls_public_key.MyLinuxBox.public_key_openssh
 }
+

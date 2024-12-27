@@ -1,4 +1,5 @@
-D#These are   for  public
+#These are  for the  public subnets
+
 
 resource "aws_subnet" "public-ap-northeast-1a" {
   #Tokyo is the default provider
@@ -15,6 +16,12 @@ resource "aws_subnet" "public-ap-northeast-1a" {
     Planet  = "Maximus"
   }
 }
+
+output "tokyo_subnet1_id" {
+  value = aws_subnet.public-ap-northeast-1a.id
+}
+
+
 
 #AZ 1b is not available in Tokyo
 /*

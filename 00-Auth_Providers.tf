@@ -13,6 +13,12 @@ provider "aws" {
   region = "ap-northeast-1"
 }
 
+provider "aws" {
+  alias = "_1Tokyo"
+  region = "ap-northeast-1"
+}
+
+
 #Moved below/ New York uses N. Virginia Region
 provider "aws" {
   alias = "NewYork"
@@ -34,7 +40,7 @@ provider "aws" {
 # Australia uses Sydney
 provider "aws" {
   alias = "sydney"
-  region = "ap-northeast-2"
+  region = "ap-southeast-2"
 }
 
 #China uses Hong Kong

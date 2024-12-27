@@ -1,3 +1,137 @@
+/*
+#Defines cidr_block as a variable 
+variable "cidr_block" {
+    description = "cidr blocks for vpc and subnets"
+    type =list (object ({
+    cidr_block = string
+    name = string
+  },))
+},
+
+
+
+#Tokyo AZ 1b is not avialable
+tokyo_cidr_blocks =[
+    {cidr_block ="10.213.0.0/16", name = "app1-vpc-A-Tokyo", region = },
+    {cidr_block ="10.213.1.0/24", name = "public-ap-northeast-1a"},
+    {cidr_block ="10.213.3.0/24", name = "public-ap-northeast-1c"},
+    {cidr_block ="10.213.4.0/24", name = "public-ap-northeast-1d"},
+    {cidr_block ="10.213.11.0/24", name = "private-ap-northeast-1a"},
+    {cidr_block ="10.213.13.0/24", name = "private-ap-northeast-1c"},
+    {cidr_block ="10.213.14.0/24", name = "private-ap-northeast-1d"},
+    ]
+
+#New York uses N. Virginia Region
+ny_cidr_blocks =[
+    {cidr_block ="10.214.0.0/16", name = "app1-vpc-B-NY"},
+    {cidr_block ="10.214.1.0/24", name = "public-us-east-1a"},
+    {cidr_block ="10.214.2.0/24", name = "public-us-east-1b"},    
+    {cidr_block ="10.214.3.0/24", name = "public-us-east-1c"},
+    {cidr_block ="10.214.11.0/24", name = "private-us-east-1a"},
+    {cidr_block ="10.214.12.0/24", name = "private-us-east-1b"},    
+    {cidr_block ="10.214.13.0/24", name = "private-us-east-1c"},
+]
+
+#UK uses London
+london_cidr_blocks =[
+    {cidr_block ="10.215.0.0/16", name = "app1-vpc-C-London"},
+    {cidr_block ="10.215.1.0/24", name = "public-eu-west-2a"},
+    {cidr_block ="10.215.2.0/24", name = "public-eu-west-2b"},    
+    {cidr_block ="10.215.3.0/24", name = "public-eu-west-2c"},
+    {cidr_block ="10.215.11.0/24", name = "private-eu-west-2a"},
+    {cidr_block ="10.215.12.0/24", name = "private-eu-west-2b"},    
+    {cidr_block ="10.215.13.0/24", name = "private-eu-west-2c"},
+]
+
+#Brazil uses Sao Paulo Region/ Theo advise us not use AZ sa-east1b
+SaoPaulo_cidr_blocks =[
+    {cidr_block ="10.216.0.0/16", name = "app1-vpc-D-Sao-Paulo"},
+    {cidr_block ="10.216.1.0/24", name = "public-sa-east-1a"},
+    #{cidr_block ="10.216.2.0/24", name = "public-sa-east-1b"}, 
+    {cidr_block ="10.216.3.0/24", name = "public-sa-east-1c"},
+    {cidr_block ="10.216.11.0/24", name = "private-sa-east-1a"},
+    #{cidr_block ="10.216.12.0/24", name = "private-sa-east-1b"},   
+    {cidr_block ="10.216.13.0/24", name = "private-sa-east-1c"},
+]
+
+
+# Australia uses Sydney
+Sydney_cidr_blocks =[
+    {cidr_block ="10.216.0.0/16", name = "app1-vpc-E-Sydney"},
+    {cidr_block ="10.216.1.0/24", name = "public-ap-northeast-2a"},
+    {cidr_block ="10.216.3.0/24", name = "public-ap-northeast-2c"},
+    {cidr_block ="10.216.2.0/24", name = "public-ap-northeast-2b"},
+    {cidr_block ="10.216.11.0/24", name = "private-ap-northeast-2a"},
+    {cidr_block ="10.216.13.0/24", name = "private-ap-northeast-2c"},
+    {cidr_block ="10.216.12.0/24", name = "private-ap-northeast-2b"},
+    ]
+
+
+#China uses Hong Kong
+HongKong_cidr_blocks =[
+    {cidr_block ="10.217.0.0/16", name = "app1-vpc-F-Hong-Kong"},
+    {cidr_block ="10.217.1.0/24", name = "public-ap-east-1a"},
+    {cidr_block ="10.217.2.0/24", name = "public-ap-east-1b"},    
+    {cidr_block ="10.217.3.0/24", name = "public-ap-east-1c"},
+    {cidr_block ="10.217.11.0/24", name = "private-ap-east-1a"},
+    {cidr_block ="10.217.12.0/24", name = "private-ap-east-1b"},    
+    {cidr_block ="10.217.13.0/24", name = "private-ap-east-1c"},
+]
+
+#California uses N. California / AZ 1a is N/A
+california_cidr_blocks =[
+    {cidr_block ="10.218.0.0/16", name = "app1-vpc-G-California"},
+    #{cidr_block ="10.218.1.0/24", name = "public-us-west-2a"},
+    {cidr_block ="10.218.2.0/24", name = "public-us-west-2b"},    
+    {cidr_block ="10.218.3.0/24", name = "public-us-west-2c"},
+    #{cidr_block ="10.218.11.0/24", name = "private-us-west-2a"},
+    {cidr_block ="10.218.12.0/24", name = "private-us-west-2b"},    
+    {cidr_block ="10.218.13.0/24", name = "private-us-west-2c"},
+]
+
+#Regions for the application VPCs
+variable "appRegion" {
+    description = "provider regions"
+    type =list (string)
+},
+
+#Application VPC Region as an array / list of strings
+appRegion = [
+    {"ap-northeast-1","us-east-1" , "eu-west-2" , "sa-east-1" , "ap-northeast-2" , "ap-east-1", "us-west-1" },
+]
+
+#Image_ID aka AMIs (e.g. Linux) for each region
+variable "Image_ID" {
+    description = "linux AMI per region"
+    type =list (string)
+},
+
+#List of AMI Linux per VPC Region as an array of strings
+Image_ID = [
+    {"ami-023ff3d4ab11b2525","ami-0453ec754f44f9a4a" , "ami-0c76bd4bd302b30ec" , "ami-0c820c196a818d66a" , "ami-0d6560f3176dc9ec0" , "ami-06f707739f2271995", "ami-038bba9a164eb3dc1" },
+]
+*/
+
+#What if I include region & image_id/ Could simple make it a separate variable
+#Defines cidr_block as a variable includes vpc name tag, region, and image_id aka ami
+/*
+variable "cidr_block" {
+    description = "cidr blocks for vpc and subnets"
+    type =list (object ({
+    cidr_block = string
+    name = string
+    region = string
+    image_id = string
+    availability_zone = string
+  },))
+},
+*/
+
+#What if I include region & image_id/ Could simple make it a separate variable
+#Defines cidr_block as a variable includes vpc name tag, region, and image_id aka ami
+
+
+
 #Tokyo AZ 1b is not avialable
 tokyo_cidr_blocks =[
     {cidr_block ="10.213.0.0/16", name = "app1-vpc-A-Tokyo", region = "ap-northeast-1", image_id = "ami-023ff3d4ab11b2525", availability_zone = "4butNo1b"},
@@ -48,16 +182,15 @@ SaoPaulo_cidr_blocks =[
     {cidr_block ="10.216.13.0/24", name = "private-sa-east-1c", region = "sa-east-1", image_id = "ami-0c820c196a818d66a", availability_zone = "sa-east-1c"}
 ]
 
-
 # Australia uses Sydney
 Sydney_cidr_blocks =[
-    {cidr_block ="10.216.0.0/16", name = "app1-vpc-E-Sydney", region = "ap-northeast-2", image_id = "ami-0146fc9ad419e2cfd", availability_zone = "3"},
-    {cidr_block ="10.216.1.0/24", name = "public-ap-northeast-2a", region = "ap-northeast-2", image_id = "ami-0146fc9ad419e2cfd", availability_zone = "ap-northeast-2a"},
-    {cidr_block ="10.216.2.0/24", name = "public-ap-northeast-2b", region = "ap-northeast-2", image_id = "ami-0146fc9ad419e2cfd", availability_zone = "ap-northeast-2b"},
-    {cidr_block ="10.216.3.0/24", name = "public-ap-northeast-2c", region = "ap-northeast-2", image_id = "ami-0146fc9ad419e2cfd", availability_zone = "ap-northeast-2c"},
-    {cidr_block ="10.216.11.0/24", name = "private-ap-northeast-2a", region = "ap-northeast-2", image_id = "ami-0146fc9ad419e2cfd", availability_zone = "ap-northeast-2a"},
-    {cidr_block ="10.216.12.0/24", name = "private-ap-northeast-2b", region = "ap-northeast-2", image_id = "ami-0146fc9ad419e2cfd", availability_zone = "ap-northeast-2b"},
-    {cidr_block ="10.216.13.0/24", name = "private-ap-northeast-2c", region = "ap-northeast-2", image_id = "ami-0146fc9ad419e2cfd", availability_zone = "ap-northeast-2c"}
+    {cidr_block ="10.216.0.0/16", name = "app1-vpc-E-Sydney", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "3"},
+    {cidr_block ="10.216.1.0/24", name = "public-ap-southeast-2a", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2a"},
+    {cidr_block ="10.216.2.0/24", name = "public-ap-southeast-2b", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2b"},
+    {cidr_block ="10.216.3.0/24", name = "public-ap-southeast-2c", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2c"},
+    {cidr_block ="10.216.11.0/24", name = "private-ap-southeast-2a", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2a"},
+    {cidr_block ="10.216.12.0/24", name = "private-ap-southeast-2b", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2b"},
+    {cidr_block ="10.216.13.0/24", name = "private-ap-southeast-2c", region = "ap-southeast-2", image_id = "ami-0d6560f3176dc9ec0", availability_zone = "ap-southeast-2c"}
 ]
 
 
@@ -85,6 +218,319 @@ california_cidr_blocks =[
     {cidr_block ="10.218.13.0/24", name = "private-us-west-1c", region = "us-west-1", image_id = "ami-038bba9a164eb3dc1", availability_zone = "us-west-1c"}
 ]
 
+#Creates variable for Internet Gateway Tags
+igw = [
+    "Tokyo_app1_IG", "NY_app1_IG","London_app1_IG","Sao-Paulo_app1_IG","Sydney_app1_IG","Hong-Kong_app1_IG","California_app1_IG"
+]
+
+#Creates variable for NAT Tags
+nat = [
+    "Tokyo_nat", "NY_nat","London_nat","Sao-Paulo_nat","Sydney_nat","Hong-Kong_nat","California_nat"
+]
+#Creates variable for Elatic IP Tags
+eip = [
+    "Tokyo-eip", "NY-eip","London-eip","Sao-Paulo-eip","Sydney-eip","Hong-Kong-eip","California-eip"
+]
+
+tokyo_naming_convention = [
+    {vpc_id = "aws_vpc.app1-vpc-A-Tokyo", subnet_id = "aws_subnet.private-ap-northeast-1a", nat_id = "aws_nat_gateway.tokyo-nat.id", igw_id = "aws_internet_gateway.Tokyo_igw.id"},
+     {vpc_id = "app1-vpc-A-Tokyo", subnet_id = "aws_subnet.private-ap-northeast-1c.id", nat_id = "aws_nat_gateway.tokyo-nat.id", igw_id = "aws_internet_gateway.Tokyo_igw.id"},
+      {vpc_id = "app1-vpc-A-Tokyo", subnet_id = "aws_subnet.private-ap-northeast-1d.id", nat_id = "aws_nat_gateway.tokyo-nat.id", igw_id = "aws_internet_gateway.Tokyo_igw.id"},
+       {vpc_id = "app1-vpc-A-Tokyo", subnet_id = "aws_subnet.public-ap-northeast-1a.id", nat_id = "aws_nat_gateway.tokyo-nat.id", igw_id = "aws_internet_gateway.Tokyo_igw.id"},
+        {vpc_id = "app1-vpc-A-Tokyo", subnet_id = "aws_subnet.public-ap-northeast-1c.id", nat_id = "aws_nat_gateway.tokyo-nat.id", igw_id = "aws_internet_gateway.Tokyo_igw.id"},
+         {vpc_id = "app1-vpc-A-Tokyo", subnet_id = "aws_subnet.public-ap-northeast-1d.id", nat_id = "aws_nat_gateway.tokyo-nat.id", igw_id = "aws_internet_gateway.Tokyo_igw.id"}
+]
+
+#save for later loop
+/*
+names_loop_resources = [
+    {vpc_id = "aws_vpc.app1-vpc-A-Tokyo.id", vpc_id = "aws_vpc.app1-vpc-B-NY.id",vpc_id = "aws_vpc.app1-vpc-C-London.id",vpc_id = "aws_vpc.app1-vpc-D-Sao-Paulo.id",vpc_id = "aws_vpc.app1-vpc-E-Sydney.id",vpc_id = "aws_vpc.app1-vpc-F-Hong-Kong.id",vpc_id = "aws_vpc.app1-vpc-G-California.id"}
+]
+*/
+
+vpc_name_loop = [
+     "aws_vpc.app1-vpc-A-Tokyo.id", 
+     "aws_vpc.app1-vpc-B-NY.id", 
+     "aws_vpc.app1-vpc-C-London.id",
+     "aws_vpc.app1-vpc-D-Sao-Paulo.id", 
+     "aws_vpc.app1-vpc-E-Sydney.id", 
+     "aws_vpc.app1-vpc-F-Hong-Kong.id", 
+     "aws_vpc.app1-vpc-G-California.id"
+]
+
+vpc_name_loop2 = [
+     "app1-vpc-A-Tokyo", 
+     "app1-vpc-B-NY", 
+     "app1-vpc-C-London",
+     "app1-vpc-D-Sao-Paulo", 
+     "app1-vpc-E-Sydney", 
+     "app1-vpc-F-Hong-Kong", 
+     "app1-vpc-G-California"
+]
 
 
 
+naming_convention = [
+    {vpc_id = "aws_vpc.app1-vpc-A-Tokyo.id", 
+    subnet_id1 = "aws_subnet.private-ap-northeast-1a.id", 
+    subnet_id2 = "aws_subnet.private-ap-northeast-1c.id", 
+    subnet_id3 = "aws_subnet.private-ap-northeast-1d.id", 
+    subnet_id4 = "aws_subnet.public-ap-northeast-1a.id", 
+    subnet_id5 = "aws_subnet.public-ap-northeast-1c.id", 
+    subnet_id6 = "aws_subnet.public-ap-northeast-1d.id",  
+    nat_id = "aws_nat_gateway.tokyo-nat.id", 
+    igw_id = "aws_internet_gateway.Tokyo_igw.id"},
+
+    {vpc_id = "aws_vpc.app1-vpc-B-NY.id.id", 
+    subnet_id1 = "aws_subnet.private-us-east-1a.id", 
+    subnet_id2 = "aws_subnet.private-us-east-1b.id", 
+    subnet_id3 = "aws_subnet.private-us-east-1c.id", 
+    subnet_id4 = "aws_subnet.public-us-east-1a.id", 
+    subnet_id5 = "aws_subnet.public-us-east-1b.id", 
+    subnet_id6 = "aws_subnet.public-us-east-1c.id",  
+    nat_id = "aws_nat_gateway.NY-nat.id", 
+    igw_id = "aws_internet_gateway.NY_igw.id"}, 
+
+    {vpc_id = "aws_vpc.app1-vpc-C-London.id.id", 
+    subnet_id1 = "aws_subnet.private-eu-west-2a.id", 
+    subnet_id2 = "aws_subnet.private-eu-west-2b.id", 
+    subnet_id3 = "aws_subnet.private-eu-west-2c.id", 
+    subnet_id4 = "aws_subnet.public-eu-west-2a.id", 
+    subnet_id5 = "aws_subnet.public-eu-west-2b.id", 
+    subnet_id6 = "aws_subnet.public-eu-west-2c.id",  
+    nat_id = "aws_nat_gateway.London-nat.id", 
+    igw_id = "aws_internet_gateway.London_igw.id"},
+
+    {vpc_id = "aws_vpc.app1-vpc-D-Sao-Paulo.id.id", 
+    subnet_id1 = "aws_subnet.private-sa-east-1a.id", 
+    subnet_id2 = "aws_subnet.private-sa-east-1b.id", 
+    subnet_id3 = "aws_subnet.private-sa-east-1c.id", 
+    subnet_id4 = "aws_subnet.public-sa-east-1a.id", 
+    subnet_id5 = "aws_subnet.public-sa-east-1b.id", 
+    subnet_id6 = "aws_subnet.public-sa-east-1c.id",  
+    nat_id = "aws_nat_gateway.Sao-Paulo-nat.id", 
+    igw_id = "aws_internet_gateway.Sao-Paulo_igw.id"},
+
+    {vpc_id = "aws_vpc.app1-vpc-E-Sydney.id.id", 
+    subnet_id1 = "aws_subnet.private-ap-northeast-2a.id", 
+    subnet_id2 = "aws_subnet.private-ap-northeast-2b.id", 
+    subnet_id3 = "aws_subnet.private-ap-northeast-2c.id", 
+    subnet_id4 = "aws_subnet.public-ap-northeast-2a.id", 
+    subnet_id5 = "aws_subnet.public-ap-northeast-2b.id", 
+    subnet_id6 = "aws_subnet.public-ap-northeast-2c.id",  
+    nat_id = "aws_nat_gateway.Sydney-nat.id", 
+    igw_id = "aws_internet_gateway.Sydney_igw.id"},
+
+    {vpc_id = "aws_vpc.app1-vpc-F-Hong-Kong.id", 
+    subnet_id1 = "aws_subnet.private-ap-east-1a.id", 
+    subnet_id2 = "aws_subnet.private-ap-east-1b.id", 
+    subnet_id3 = "aws_subnet.private-ap-east-1c.id", 
+    subnet_id4 = "aws_subnet.public-ap-east-1a.id", 
+    subnet_id5 = "aws_subnet.public-ap-east-1b.id", 
+    subnet_id6 = "aws_subnet.public-ap-east-1c.id",  
+    nat_id = "aws_nat_gateway.Hong-Kong-nat.id", 
+    igw_id = "aws_internet_gateway.Hong-Kong_igw.id"},
+     
+     #AZ 1a not available in California/ Can I still create placeholder routes?
+    {vpc_id = "aws_vpc.app1-vpc-G-California.id", 
+    subnet_id1 = "aws_subnet.private-us-west-1a.id", 
+    subnet_id2 = "aws_subnet.private-us-west-1b.id", 
+    subnet_id3 = "aws_subnet.private-us-west-1c.id", 
+    subnet_id4 = "aws_subnet.public-us-west-1a.id", 
+    subnet_id5 = "aws_subnet.public-us-west-1b.id", 
+    subnet_id6 = "aws_subnet.public-us-west-1c.id",  
+    nat_id = "aws_nat_gateway.California-nat.id", 
+    igw_id = "aws_internet_gateway.California_igw.id"}
+     
+]
+
+naming_convention2 = {
+   Tokyo = {
+    vpc_id = "app1-vpc-A-Tokyo", 
+    subnet_id1 = "private-ap-northeast-1a", 
+    subnet_id2 = "private-ap-northeast-1c", 
+    subnet_id3 = "private-ap-northeast-1d", 
+    subnet_id4 = "public-ap-northeast-1a", 
+    subnet_id5 = "public-ap-northeast-1c", 
+    subnet_id6 = "public-ap-northeast-1d",  
+    nat_id = "tokyo-nat", 
+    igw_id = "Tokyo_igw"},
+
+    NewYork = {
+    vpc_id = "app1-vpc-B-NY", 
+    subnet_id1 = "private-us-east-1a", 
+    subnet_id2 = "private-us-east-1b", 
+    subnet_id3 = "private-us-east-1c", 
+    subnet_id4 = "public-us-east-1a", 
+    subnet_id5 = "public-us-east-1b", 
+    subnet_id6 = "public-us-east-1c",  
+    nat_id = "NY-nat", 
+    igw_id = "NY_igw"}, 
+
+    London = {
+    vpc_id = "app1-vpc-C-London", 
+    subnet_id1 = "private-eu-west-2a", 
+    subnet_id2 = "private-eu-west-2b", 
+    subnet_id3 = "private-eu-west-2c", 
+    subnet_id4 = "public-eu-west-2a", 
+    subnet_id5 = "public-eu-west-2b", 
+    subnet_id6 = "public-eu-west-2c",  
+    nat_id = "London-nat", 
+    igw_id = "London_igw"},
+
+    SaoPaulo = {
+    vpc_id = "app1-vpc-D-Sao-Paulo", 
+    subnet_id1 = "private-sa-east-1a", 
+    subnet_id2 = "private-sa-east-1b", 
+    subnet_id3 = "private-sa-east-1c", 
+    subnet_id4 = "public-sa-east-1a", 
+    subnet_id5 = "public-sa-east-1b", 
+    subnet_id6 = "public-sa-east-1c",  
+    nat_id = "Sao-Paulo-nat", 
+    igw_id = "Sao-Paulo_igw"},
+
+    Sydney = {
+    vpc_id = "app1-vpc-E-Sydney", 
+    subnet_id1 = "private-ap-northeast-2a", 
+    subnet_id2 = "private-ap-northeast-2b", 
+    subnet_id3 = "private-ap-northeast-2c", 
+    subnet_id4 = "public-ap-northeast-2a", 
+    subnet_id5 = "public-ap-northeast-2b", 
+    subnet_id6 = "public-ap-northeast-2c",  
+    nat_id = "Sydney-nat", 
+    igw_id = "Sydney_igw"},
+
+    HongKong = {
+    vpc_id = "app1-vpc-F-Hong-Kong", 
+    subnet_id1 = "private-ap-east-1a", 
+    subnet_id2 = "private-ap-east-1b", 
+    subnet_id3 = "private-ap-east-1c", 
+    subnet_id4 = "public-ap-east-1a", 
+    subnet_id5 = "public-ap-east-1b", 
+    subnet_id6 = "public-ap-east-1c",  
+    nat_id = "Hong-Kong-nat", 
+    igw_id = "Hong-Kong_igw"},
+     
+    /*AZ 1a not available in California/ Can I still create placeholder routes?*/
+    California = {
+    vpc_id = "app1-vpc-G-California", 
+    subnet_id1 = "private-us-west-1a", 
+    subnet_id2 = "private-us-west-1b", 
+    subnet_id3 = "private-us-west-1c", 
+    subnet_id4 = "public-us-west-1a", 
+    subnet_id5 = "public-us-west-1b", 
+    subnet_id6 = "public-us-west-1c",  
+    nat_id = "California-nat", 
+    igw_id = "California_igw"}
+     
+}
+
+naming_convention3 = {
+
+        "Tokyo" = { 
+        vpc_id = "app1-vpc-A-Tokyo", 
+        subnet_id1 = "private-ap-northeast-1a", 
+        subnet_id2 = "private-ap-northeast-1c", 
+        subnet_id3 = "private-ap-northeast-1d", 
+        subnet_id4 = "public-ap-northeast-1a", 
+        subnet_id5 = "public-ap-northeast-1c", 
+        subnet_id6 = "public-ap-northeast-1d",  
+        nat_id = "tokyo-nat", 
+        igw_id = "Tokyo_igw",
+        tags ={
+            Name = "ForTokyo",
+            Service = "application1"
+        }},
+
+        "NewYork" = {
+        vpc_id = "app1-vpc-B-NY", 
+        subnet_id1 = "private-us-east-1a", 
+        subnet_id2 = "private-us-east-1b", 
+        subnet_id3 = "private-us-east-1c", 
+        subnet_id4 = "public-us-east-1a", 
+        subnet_id5 = "public-us-east-1b", 
+        subnet_id6 = "public-us-east-1c",  
+        nat_id = "NY-nat", 
+        igw_id = "NY_igw", 
+        tags ={
+            Name = "ForTokyo",
+            Service = "application1"
+        }},
+
+        "London" = {
+        vpc_id = "app1-vpc-C-London", 
+        subnet_id1 = "private-eu-west-2a", 
+        subnet_id2 = "private-eu-west-2b", 
+        subnet_id3 = "private-eu-west-2c", 
+        subnet_id4 = "public-eu-west-2a", 
+        subnet_id5 = "public-eu-west-2b", 
+        subnet_id6 = "public-eu-west-2c",  
+        nat_id = "London-nat", 
+        igw_id = "London_igw", 
+        tags ={
+            Name = "ForTokyo",
+            Service = "application1"
+        }},
+
+        "SaoPaulo" = {
+        vpc_id = "app1-vpc-D-Sao-Paulo", 
+        subnet_id1 = "private-sa-east-1a", 
+        subnet_id2 = "private-sa-east-1b", 
+        subnet_id3 = "private-sa-east-1c", 
+        subnet_id4 = "public-sa-east-1a", 
+        subnet_id5 = "public-sa-east-1b", 
+        subnet_id6 = "public-sa-east-1c",  
+        nat_id = "Sao-Paulo-nat", 
+        igw_id = "Sao-Paulo_igw", 
+        tags ={
+            Name = "ForTokyo",
+            Service = "application1"
+        }},
+
+        "Sydney" =         {
+        vpc_id = "app1-vpc-E-Sydney", 
+        subnet_id1 = "private-ap-northeast-2a", 
+        subnet_id2 = "private-ap-northeast-2b", 
+        subnet_id3 = "private-ap-northeast-2c", 
+        subnet_id4 = "public-ap-northeast-2a", 
+        subnet_id5 = "public-ap-northeast-2b", 
+        subnet_id6 = "public-ap-northeast-2c",  
+        nat_id = "Sydney-nat", 
+        igw_id = "Sydney_igw", 
+        tags ={
+            Name = "ForTokyo",
+            Service = "application1"
+        }},
+
+        "HongKong" = {
+        vpc_id = "app1-vpc-F-Hong-Kong", 
+        subnet_id1 = "private-ap-east-1a", 
+        subnet_id2 = "private-ap-east-1b", 
+        subnet_id3 = "private-ap-east-1c", 
+        subnet_id4 = "public-ap-east-1a", 
+        subnet_id5 = "public-ap-east-1b", 
+        subnet_id6 = "public-ap-east-1c",  
+        nat_id = "Hong-Kong-nat", 
+        igw_id = "Hong-Kong_igw", 
+        tags ={
+            Name = "ForTokyo",
+            Service = "application1"
+        }},
+
+        /*AZ 1a not available in California/ Can I still create placeholder routes?*/
+        "California" = {
+        vpc_id = "app1-vpc-G-California", 
+        subnet_id1 = "private-us-west-1a", 
+        subnet_id2 = "private-us-west-1b", 
+        subnet_id3 = "private-us-west-1c", 
+        subnet_id4 = "public-us-west-1a", 
+        subnet_id5 = "public-us-west-1b", 
+        subnet_id6 = "public-us-west-1c",  
+        nat_id = "California-nat", 
+        igw_id = "California_igw", 
+        tags ={
+            Name = "ForTokyo",
+            Service = "application1"
+        }},
+
+    }
