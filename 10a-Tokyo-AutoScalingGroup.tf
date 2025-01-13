@@ -70,7 +70,7 @@ resource "aws_autoscaling_policy" "app1_scaling_policy_80" {
 # Enabling instance scale-in protection
 resource "aws_autoscaling_attachment" "app1_asg_80_attachment" {
   autoscaling_group_name = aws_autoscaling_group.app1_asg_80.name
-  alb_target_group_arn   = aws_lb_target_group.app1_tg_80.arn
+  alb_target_group_arn = aws_lb_target_group.app1_tg_80.arn
 }
 
 /*

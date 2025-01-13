@@ -49,6 +49,7 @@ resource "aws_route_table" "public-SaoPaulo" {
 
   tags = {
     Name = "public-SaoPaulo"
+    service = "Sao Paulo_VPC_Public_RT"
   }
 }
 

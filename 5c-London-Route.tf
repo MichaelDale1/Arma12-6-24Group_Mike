@@ -50,10 +50,11 @@ resource "aws_route_table" "public-London" {
 
   tags = {
     Name = "public-London"
+    service = "London_VPC_Public_RT"
   }
 }
 
-resource "aws_route_table_association" "private-eu-west-2a" {
+ resource "aws_route_table_association" "private-eu-west-2a" {
  provider = aws.london
   subnet_id      = aws_subnet.private-eu-west-2a.id
   route_table_id = aws_route_table.private-London.id

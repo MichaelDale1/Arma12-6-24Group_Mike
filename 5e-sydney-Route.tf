@@ -49,9 +49,11 @@ resource "aws_route_table" "public-sydney" {
 
   tags = {
     Name = "public-sydney"
+    service = "Sydney_VPC_Public_RT"
   }
 }
 
+  
 resource "aws_route_table_association" "private-ap-southeast-2a" {
  provider = aws.sydney
   subnet_id      = aws_subnet.private-ap-southeast-2a.id

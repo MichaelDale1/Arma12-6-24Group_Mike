@@ -49,21 +49,11 @@ resource "aws_route_table" "public-California" {
 
   tags = {
     Name = "public-California"
+    service = "California_VPC_Public_RT"
   }
 }
 
-/*resource "aws_route_table_association" "private-us-west-1a" {
- provider = aws.California
-  subnet_id      = aws_subnet.private-us-west-1a.id
-  route_table_id = aws_route_table.private-California.id
-
-  #tags = {
-    #Name = var.naming_convention3.California.tags.Name
-
-  #}
-}*/
-
-resource "aws_route_table_association" "private-us-west-1b" {
+ resource "aws_route_table_association" "private-us-west-1b" {
   provider = aws.California
   subnet_id      = aws_subnet.private-us-west-1b.id
   route_table_id = aws_route_table.private-California.id

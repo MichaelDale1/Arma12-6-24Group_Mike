@@ -49,10 +49,11 @@ resource "aws_route_table" "public-HongKong" {
 
   tags = {
     Name = "public-HongKong"
+    service = "HongKong_VPC_Public_RT"
   }
 }
 
-resource "aws_route_table_association" "private-ap-east-1a" {
+ resource "aws_route_table_association" "private-ap-east-1a" {
  provider = aws.HongKong
   subnet_id      = aws_subnet.private-ap-east-1a.id
   route_table_id = aws_route_table.private-HongKong.id

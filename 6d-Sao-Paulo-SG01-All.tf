@@ -13,7 +13,13 @@ resource "aws_security_group" "app1-sg01-servers-TG01-SG01-80-SaoPaulo" {
   }
 
 
-
+  ingress {
+    description = "ICMPforTransitGateway"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -53,6 +59,14 @@ ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+    ingress {
+    description = "ICMPforTransitGateway"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 

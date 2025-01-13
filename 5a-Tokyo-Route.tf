@@ -48,8 +48,10 @@ resource "aws_route_table" "public" {
 
   tags = {
     Name = "public"
+    service = "Tokyo_VPC_Public_RT"
   }
 }
+
 
 resource "aws_route_table_association" "private-ap-northeast-1a" {
   subnet_id      = aws_subnet.private-ap-northeast-1a.id

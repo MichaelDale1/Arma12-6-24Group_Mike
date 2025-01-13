@@ -50,16 +50,18 @@ resource "aws_route_table" "public-NY" {
 
   tags = {
     Name = "public-NY"
+    service = "NY_VPC_Public_RT"
   }
 }
 
+  
 resource "aws_route_table_association" "private-us-east-1a" {
  provider = aws.NewYork
   subnet_id      = aws_subnet.private-us-east-1a.id
   route_table_id = aws_route_table.private-NY.id
 
   #tags = {
-    #Name = var.naming_convention3.Tokyo.tags.Name
+    #Name = var.naming_convention3.NY.tags.Name
 
   #}
 }
